@@ -16,7 +16,7 @@ const CartProvider = ({ children }) => {
       return accumulator+ currentItem.price * currentItem.amount;
     },0);
     setTotal(total);
-  });
+  },[cart]);
 
 
   //update item amount
@@ -28,6 +28,7 @@ const CartProvider = ({ children }) => {
       setItemAmount(amount);
     }
   },[cart])
+
   //add to cart
   const addToCart = (product, id) => {
     const newItem = { ...product, amount: 1 };
@@ -41,9 +42,14 @@ const CartProvider = ({ children }) => {
         if (item.id === id) {
           return { ...item, amount: cartItem.amount + 1 };
         }
+        else {
+          // Return the unchanged item
+          return item;
+        }
       });
       setCart(newCart);
-    } else {
+    } 
+    else {
       setCart([...cart, newItem]);
     }
   };
